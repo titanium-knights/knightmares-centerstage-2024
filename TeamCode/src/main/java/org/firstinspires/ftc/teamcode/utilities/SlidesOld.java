@@ -44,9 +44,9 @@ public class SlidesOld {
     int lowheight = 1472;
     int dropheight = 800;
 
-    public Slides(HardwareMap hmap){
-        this.slideMotorL = hmap.dcMotor.get(CONFIG.SLIDEL);
-        this.slideMotorR = hmap.dcMotor.get(CONFIG.SLIDER);
+    public SlidesOld(HardwareMap hmap){
+        // this.slideMotorL = hmap.dcMotor.get(CONFIG.SLIDEL);
+        // this.slideMotorR = hmap.dcMotor.get(CONFIG.SLIDER);
         this.state = this.Lpos = this.Rpos = 0;
 
         slideMotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
