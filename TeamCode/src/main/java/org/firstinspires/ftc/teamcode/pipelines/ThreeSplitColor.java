@@ -11,7 +11,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
 
-public class BasicRedBlueDiff extends OpenCvPipeline {
+public class ThreeSplitColor extends OpenCvPipeline {
 
     private final Telemetry telemetry;
 
@@ -40,11 +40,11 @@ public class BasicRedBlueDiff extends OpenCvPipeline {
 
     //instantiate the object with telemetry and a color, which defaults to RED
     // this is the constructor that will be used by easy openCV sim
-    public BasicRedBlueDiff(Telemetry telemetry) {
+    public ThreeSplitColor(Telemetry telemetry) {
         this(telemetry, "blue");
     }
 
-    public BasicRedBlueDiff(Telemetry telemetry, String color) {
+    public ThreeSplitColor(Telemetry telemetry, String color) {
         this.telemetry = telemetry;
 
         if (color.equalsIgnoreCase("red")) this.colorNum = 0;
