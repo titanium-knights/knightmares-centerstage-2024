@@ -13,4 +13,7 @@ public class CONFIG {
 
     //webcam
     public static String webcam = "Webcam 1";
+
+    //slide motor
+    public static String slide = ""
 }

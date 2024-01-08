@@ -15,11 +15,26 @@ public class SlidesOld {
     // Right (Acc on the left in this view), must go counter clockwise
     // Positive power is counter clockwise,
 
+    // notes from Shawn
+    // position - replace with one pos variable
+    // state - keep that, seems good
+    // recalibrate preset heights later
+    // rework everything to work with one slideMotor, not two
+    //
+
     //position at initial
     int Lpos;
     int Rpos;
     //Current state of slide. 0 - idle, 1 - up, 2 - down
     int state;
+
+    enum State {
+        Idle,
+        Up,
+        Down
+    }
+
+    State state1;
 
     //Preset heights,
     // TO DO: CALIBRATE
