@@ -15,5 +15,5 @@ public class CONFIG {
     public static String webcam = "Webcam 1";
 
     //slide motor
-    public static String slide = ""
+    public static String slide = "";
 }
