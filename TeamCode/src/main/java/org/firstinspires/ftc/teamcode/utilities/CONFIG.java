@@ -16,4 +16,7 @@ public class CONFIG {
 
     //slide motor
     public static String slide = "";
+
+    public static String pullUpLeftServo = "pul";
+    public static String pullUpRightServo = "pur";
 }
