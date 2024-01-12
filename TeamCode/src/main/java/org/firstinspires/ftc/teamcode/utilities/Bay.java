@@ -12,10 +12,10 @@ public class Bay {
     Servo bottomRight;
 
     public Bay(HardwareMap hmap) {
-        this.topLeft = hmap.dcMotor.get(CONFIG.bayTopLeft); // i have to actually add this into the phone
-        this.topRight = hmap.dcMotor.get(CONFIG.bayTopRight);
-        this.bottomLeft = hmap.dcMotor.get(CONFIG.bayBottomLeft);
-        this.bottomRight = hmap.dcMotor.get(CONFIG.bayBottomRight);
+        this.topLeft = hmap.servo.get(CONFIG.bayTopLeft); // i have to actually add this into the phone
+        this.topRight = hmap.servo.get(CONFIG.bayTopRight);
+        this.bottomLeft = hmap.servo.get(CONFIG.bayBottomLeft);
+        this.bottomRight = hmap.servo.get(CONFIG.bayBottomRight);
         setInit();
     }
 
