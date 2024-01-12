@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.utilities;
 
-
 import com.acmerobotics.dashboard.config.Config;
 
 @Config
@@ -16,4 +15,13 @@ public class CONFIG {
 
     //slide motor
     public static String slide = "";
+
+    public static String pullUpLeftServo = "pul";
+    public static String pullUpRightServo = "pur";
+
+    //intake
+    public static String intake = "intake";
+
+    //plane launcher
+    public static String planeServo = "plane";
 }
