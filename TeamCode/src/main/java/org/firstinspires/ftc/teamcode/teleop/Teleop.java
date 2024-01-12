@@ -16,4 +16,14 @@ public class Teleop extends OpMode {
 
         if (gamepad1.b) { intake.stopIntake();} // button may need to be changed
     }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void loop() {
+
+    }
 }
