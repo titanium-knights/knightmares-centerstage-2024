@@ -24,4 +24,10 @@ public class CONFIG {
 
     //plane launcher
     public static String planeServo = "plane";
+
+    //bay
+    public static String bayTopLeft = "bTL";
+    public static String bayTopRight = "bTR";
+    public static String bayBottomLeft = "bBL";
+    public static String bayBottomRight = "bBR";
 }
