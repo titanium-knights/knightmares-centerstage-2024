@@ -30,4 +30,5 @@ public class CONFIG {
     public static String bayTopRight = "bTR";
     public static String bayBottomLeft = "bBL";
     public static String bayBottomRight = "bBR";
+    public static String distSensor = "ds";
 }
