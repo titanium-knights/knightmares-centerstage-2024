@@ -20,8 +20,8 @@ public class Slides {
     //Current state of slide. 0 - idle, 1 - up, 2 - down
     int state;
 
-    //Preset heights,
-    // TO DO: CALIBRATE
+    // Preset heights,
+    // TODO: CALIBRATE
     int maxheight = 3481;
 
     int midheight = 2424;
@@ -90,12 +90,6 @@ public class Slides {
     }
 
     public void tozero(){
-        setTarget(0);
-        runToPosition();
-        pos = getEncoder();
-    }
-
-    public void totrue(){
         setTarget(0);
         runToPosition();
         pos = getEncoder();
