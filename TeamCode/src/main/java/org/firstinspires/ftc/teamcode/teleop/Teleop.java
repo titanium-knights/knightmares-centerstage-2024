@@ -11,6 +11,14 @@ import org.firstinspires.ftc.teamcode.utilities.Intake;
 public class Teleop extends OpMode {
     Intake intake;
 
+    public enum SlideState {
+        SLIDE_BOTTOM,
+        SLIDE_LOW,
+        SLIDE_MEDIUM,
+        SLIDE_HIGH
+    };
+    SlideState slideState = SlideState.SLIDE_BOTTOM;
+
     public void intake() {
         if (gamepad1.a) { intake.runIntake(); } // button may need to be changed
 
@@ -24,6 +32,21 @@ public class Teleop extends OpMode {
 
     @Override
     public void loop() {
-
+        switch(slideState) {
+            case SLIDE_BOTTOM:
+                // slide bottom code
+                break;
+            case SLIDE_LOW:
+                // slide low code
+                break;
+            case SLIDE_MEDIUM:
+                // slide medium code
+                break;
+            case SLIDE_HIGH:
+                // slide high code
+                break;
+            default:
+                slideState = SlideState.SLIDE_BOTTOM;
+        }
     }
 }
