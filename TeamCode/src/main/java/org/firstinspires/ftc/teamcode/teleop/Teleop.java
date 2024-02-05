@@ -81,13 +81,13 @@ public class Teleop extends OpMode {
             case OPENED:
                 if (gamepad1.a) {
                     bay.close();
-                    bayState = BayState.OPENED;
+                    bayState = BayState.CLOSED;
                 }
                 break;
             case CLOSED:
                 if (gamepad1.a) {
                     bay.open();
-                    bayState = BayState.CLOSED;
+                    bayState = BayState.OPENED;
                 }
                 break;
             default:
