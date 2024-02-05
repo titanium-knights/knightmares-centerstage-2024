@@ -47,10 +47,10 @@ class TwoSplitColor @JvmOverloads constructor(
         }
     }
 
-    fun getLocation(): Locations {
-        telemetry.addLine(location.name)
-        return location
-    }
+//    fun getLocation(): Locations {
+//        telemetry.addLine(location.name)
+//        return location
+//    }
 
     fun getScore(rgb: DoubleArray): Int {
         val want = (rgb[colorNum] * WANT_WEIGHT).toInt()
