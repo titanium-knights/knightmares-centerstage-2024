@@ -14,10 +14,10 @@ public class CONFIG {
     public static String webcam = "Webcam 1";
 
     //slide motor
-    public static String slide = "";
+    public static String slide = "slides";
 
-    public static String pullUpMotor1 = "pul";
-    public static String pullUpMotor2 = "pur";
+    public static String pullUpMotor1 = "pl1";
+    public static String pullUpMotor2 = "pl2";
 
     //intake
     public static String intake = "intake";
@@ -26,9 +26,7 @@ public class CONFIG {
     public static String planeServo = "plane";
 
     //bay
-    public static String bayTopLeft = "bTL";
-    public static String bayTopRight = "bTR";
-    public static String bayBottomLeft = "bBL";
-    public static String bayBottomRight = "bBR";
-    public static String distSensor = "ds";
+    public static String bayLeft = "bL";
+    public static String bayRight = "bR";
+
 }

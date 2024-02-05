@@ -48,12 +48,11 @@ public class Teleop extends OpMode {
     PullUpState pullupstate = PullUpState.NEUTRAL;
 
     public enum BayState {
-        EMPTY,
-        BOTTOM_FILLED, // bottom has a pixel, top does not have a pixel
-        FILLED,
+        OPENED,
+        CLOSED,
         TOP_FILLED // top has a pixel, bottom does not have a pixel
     }
-    BayState bayState = BayState.EMPTY;
+    BayState bayState = BayState.CLOSED;
 
     @Override
     public void init() {
@@ -79,87 +78,100 @@ public class Teleop extends OpMode {
 
         // BAY
         switch (bayState) {
-            case EMPTY:
-                bay.openTop();
-                bay.closeBottom();
-                if (???) { // TODO: if distance sensor senses that bottom has pixel
-                    bayState = BayState.BOTTOM_FILLED;
+            case OPENED:
+                if (gamepad1.a) {
+                    bay.close();
+                    bayState = BayState.OPENED;
                 }
                 break;
-            case FILLED:
+            case CLOSED:
                 if (gamepad1.a) {
-                    bay.openBottom();
-                    bayState = BayState.TOP_FILLED;
-                }
-                break;
-            case BOTTOM_FILLED:
-                bay.closeTop();
-                if (gamepad1.a) {
-                    bay.openBottom();
-                    bay.openTop();
-                    bayState = BayState.EMPTY;
-                }
-                if (???) { // TODO: if distance sensor senses that top has pixel
-                    bayState = BayState.FILLED;
-                }
-                break;
-            case TOP_FILLED:
-                if (gamepad1.a) {
-                    bay.openTop();
-                    bayState = BayState.EMPTY;
+                    bay.open();
+                    bayState = BayState.CLOSED;
                 }
                 break;
             default:
-                bayState = BayState.EMPTY;
+                bayState = BayState.CLOSED;
                 break;
         }
 
         // SLIDES & INTAKE
         switch (slideState) {
             case SLIDE_BOTTOM:
-                if (gamepad1.left_trigger > 0.1f) {
-                    intake.runIntake();
-                }
-                if (gamepad1.right_trigger > 0.1f) {
-                    slides.low();
-                    intake.stopIntake();
-                    slideState = SlideState.SLIDE_LOW;
+                if (slides.getTarget() == 1472) { // lowheight
+                    if (gamepad1.left_trigger > 0.1f) {
+                        intake.runIntake();
+                        telemetry.addLine("SLIDE_BOTTOM left-trigger");
+                        telemetry.update();
+                    }
+                    if (gamepad1.right_trigger > 0.1f) {
+                        slides.low();
+                        intake.stopIntake();
+                        slideState = SlideState.SLIDE_LOW;
+                        telemetry.addLine("SLIDE_BOTTOM right-trigger");
+                        telemetry.update();
+                    }
                 }
                 break;
             case SLIDE_LOW:
-                // slide low code
-                if (gamepad1.left_trigger > 0.1f) {
-                    slides.tozero();
-                    intake.runIntake();
-                    slideState = SlideState.SLIDE_BOTTOM;
-                }
-                if (gamepad1.right_trigger > 0.1f) {
-                    slides.middle();
-                    intake.stopIntake();
-                    slideState = SlideState.SLIDE_MEDIUM;
+                if (slides.getTarget() == 1472) { // lowheight
+                    if (gamepad1.left_trigger > 0.1f) {
+                        slides.tozero();
+                        intake.runIntake();
+                        slideState = SlideState.SLIDE_BOTTOM;
+                        telemetry.addLine("SLIDE_LOW left-trigger");
+                        telemetry.update();
+                    }
+                    if (gamepad1.right_trigger > 0.1f) {
+                        slides.middle();
+                        intake.stopIntake();
+                        slideState = SlideState.SLIDE_MEDIUM;
+                        telemetry.addLine("SLIDE_LOW right-trigger");
+                        telemetry.update();
+                    }
                 }
                 break;
             case SLIDE_MEDIUM:
+                if (slides.getTarget() == 1472) { // mid height
+                    if (gamepad1.left_trigger > 0.1f) {
+                        slides.tozero();
+                        intake.runIntake();
+                        slideState = SlideState.SLIDE_BOTTOM;
+                        telemetry.addLine("SLIDE_MEDIUM left-trigger");
+                        telemetry.update();
+                    }
+                    if (gamepad1.right_trigger > 0.1f) {
+                        slides.high();
+                        intake.stopIntake();
+                        slideState = SlideState.SLIDE_HIGH;
+                        telemetry.addLine("SLIDE_MEDIUM right-trigger");
+                        telemetry.update();
+                    }
+                }
+                break;
+            case SLIDE_HIGH:
+                if (slides.getTarget() ==) {
+
+                }
                 if (gamepad1.left_trigger > 0.1f) {
                     slides.tozero();
                     intake.runIntake();
                     slideState = SlideState.SLIDE_BOTTOM;
+                    telemetry.addLine("SLIDE_HIGH left-trigger");
+                    telemetry.update();
                 }
                 if (gamepad1.right_trigger > 0.1f) {
                     slides.high();
                     intake.stopIntake();
                     slideState = SlideState.SLIDE_HIGH;
-                }
-                break;
-            case SLIDE_HIGH:
-                if (gamepad1.left_trigger > 0.1f) {
-                    slides.tozero();
-                    intake.runIntake();
-                    slideState = SlideState.SLIDE_BOTTOM;
+                    telemetry.addLine("SLIDE_HIGH right-trigger");
+                    telemetry.update();
                 }
                 break;
             default:
                 slideState = SlideState.SLIDE_BOTTOM;
+                telemetry.addLine("default");
+                telemetry.update();
         }
 
         //PULL UP
