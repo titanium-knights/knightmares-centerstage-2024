@@ -98,7 +98,7 @@ public class Teleop extends OpMode {
         // SLIDES & INTAKE
         switch (slideState) {
             case SLIDE_BOTTOM:
-                if (slides.getTarget() == 1472) { // lowheight
+                if (slides.getTarget() == 800) { // lowheight
                     if (gamepad1.left_trigger > 0.1f) {
                         intake.runIntake();
                         telemetry.addLine("SLIDE_BOTTOM left-trigger");
@@ -132,7 +132,7 @@ public class Teleop extends OpMode {
                 }
                 break;
             case SLIDE_MEDIUM:
-                if (slides.getTarget() == 1472) { // mid height
+                if (slides.getTarget() == 2424) { // mid height
                     if (gamepad1.left_trigger > 0.1f) {
                         slides.tozero();
                         intake.runIntake();
@@ -150,22 +150,14 @@ public class Teleop extends OpMode {
                 }
                 break;
             case SLIDE_HIGH:
-                if (slides.getTarget() ==) {
-
-                }
-                if (gamepad1.left_trigger > 0.1f) {
-                    slides.tozero();
-                    intake.runIntake();
-                    slideState = SlideState.SLIDE_BOTTOM;
-                    telemetry.addLine("SLIDE_HIGH left-trigger");
-                    telemetry.update();
-                }
-                if (gamepad1.right_trigger > 0.1f) {
-                    slides.high();
-                    intake.stopIntake();
-                    slideState = SlideState.SLIDE_HIGH;
-                    telemetry.addLine("SLIDE_HIGH right-trigger");
-                    telemetry.update();
+                if (slides.getTarget() == 3481) { // high height
+                    if (gamepad1.left_trigger > 0.1f) {
+                        slides.tozero();
+                        intake.runIntake();
+                        slideState = SlideState.SLIDE_BOTTOM;
+                        telemetry.addLine("SLIDE_HIGH left-trigger");
+                        telemetry.update();
+                    }
                 }
                 break;
             default:
