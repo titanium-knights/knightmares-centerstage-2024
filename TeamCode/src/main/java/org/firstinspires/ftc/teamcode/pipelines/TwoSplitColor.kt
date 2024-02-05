@@ -77,7 +77,7 @@ class TwoSplitColor @JvmOverloads constructor(
             telemetry.addLine("min score = " + minScore)
             maxIndex = 2
         }
-        location = Locations.entries.toTypedArray()[maxIndex]
+        location = Locations.values()[maxIndex]
         telemetry.addData("Chose position: ", location.name)
         telemetry.update()
         val THICKNESS = 7
