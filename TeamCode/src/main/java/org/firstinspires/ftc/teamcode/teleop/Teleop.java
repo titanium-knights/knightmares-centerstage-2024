@@ -33,6 +33,8 @@ public class Teleop extends OpMode {
     //makes validate button have to be pressed for a while before features enabled
     int validatecount = 0;
 
+    double bayBuffer = 0.05;
+
     public enum SlideState {
         SLIDE_BOTTOM,
         SLIDE_LOW,
@@ -77,32 +79,68 @@ public class Teleop extends OpMode {
         move(-x, y, turn);
 
         // BAY
+
+        // BAY TRY 1
+
+        double pos = bay.getPosition();
+
         switch (bayState) {
             case OPENED:
                 if (gamepad1.a) {
-                    bay.close();
-                    bayState = BayState.CLOSED;
+                    if (Math.abs(bay.getPosition() - 0.5) < 0.05) {// 0.5 is the value when open
+                        bay.close();
+                        bayState = BayState.CLOSED;
+                        telemetry.addLine("bayState" + bayState);
+                        telemetry.update();
+                        telemetry.addLine("pos " + pos);
+                        telemetry.update();
+                    }
                 }
                 break;
+
             case CLOSED:
                 if (gamepad1.a) {
-                    bay.open();
-                    bayState = BayState.OPENED;
+                    if (Math.abs(bay.getPosition() - 0) < 0.05) { // 0.5 is the value when open
+                        bay.open();
+                        bayState = BayState.OPENED;
+                        telemetry.addLine("bayState" + bayState);
+                        telemetry.update();
+                        telemetry.addLine("pos " + pos);
+                        telemetry.update();
+                    }
                 }
                 break;
+
             default:
                 bayState = BayState.CLOSED;
-                break;
+                telemetry.addLine("bayState" + bayState);
+                telemetry.update();
         }
+
+        // BAY TRY 2
+//        boolean closed = true;
+//        double pos = bay.getPosition();
+//
+//        if (gamepad1.a) {
+//            if (pos <= bayBuffer) {
+//                bay.open();
+//                closed = false;
+//            }
+//            if (pos >= (0.5-bayBuffer)) { // 0.5 is the value when open
+//                bay.close();
+//                closed = true;
+//            }
+//        }
 
         // SLIDES & INTAKE
         switch (slideState) {
             case SLIDE_BOTTOM:
-                if (slides.getTarget() == 800) { // lowheight
+                if (Math.abs(slides.getEncoder() - 0) < 10) { // dropheight
                     if (gamepad1.left_trigger > 0.1f) {
                         intake.runIntake();
                         telemetry.addLine("SLIDE_BOTTOM left-trigger");
                         telemetry.update();
+
                     }
                     if (gamepad1.right_trigger > 0.1f) {
                         slides.low();
@@ -110,11 +148,14 @@ public class Teleop extends OpMode {
                         slideState = SlideState.SLIDE_LOW;
                         telemetry.addLine("SLIDE_BOTTOM right-trigger");
                         telemetry.update();
+
                     }
                 }
                 break;
             case SLIDE_LOW:
-                if (slides.getTarget() == 1472) { // lowheight
+                telemetry.addData("encoder position", slides.getEncoder());
+                telemetry.update();
+                if (Math.abs(slides.getEncoder() - 1472) < 10) { // lowheight
                     if (gamepad1.left_trigger > 0.1f) {
                         slides.tozero();
                         intake.runIntake();
@@ -132,7 +173,7 @@ public class Teleop extends OpMode {
                 }
                 break;
             case SLIDE_MEDIUM:
-                if (slides.getTarget() == 2424) { // mid height
+                if (Math.abs(slides.getEncoder() - 2424) < 10) { // mid height
                     if (gamepad1.left_trigger > 0.1f) {
                         slides.tozero();
                         intake.runIntake();
@@ -150,7 +191,7 @@ public class Teleop extends OpMode {
                 }
                 break;
             case SLIDE_HIGH:
-                if (slides.getTarget() == 3481) { // high height
+                if (Math.abs(slides.getEncoder() - 3481) < 10) { // high height
                     if (gamepad1.left_trigger > 0.1f) {
                         slides.tozero();
                         intake.runIntake();

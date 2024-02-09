@@ -31,6 +31,10 @@ public class Bay {
         bottomRight.setPosition(openPosRight);
     }
 
+    public double getPosition() {
+        return bottomLeft.getPosition();
+    }
+
     public void close() {
         bottomLeft.setPosition(closedPosLeft);
         bottomRight.setPosition(closedPosRight);
