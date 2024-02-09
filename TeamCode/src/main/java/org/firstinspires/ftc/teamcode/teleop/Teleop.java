@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.teleop;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.utilities.Intake;
 import org.firstinspires.ftc.teamcode.utilities.Slides;
@@ -56,6 +57,15 @@ public class Teleop extends OpMode {
     }
     BayState bayState = BayState.CLOSED;
 
+    ElapsedTime elapsedTime;
+
+    enum ButtonPressState {
+        PRESSED_GOOD, //the first time we see the button pressed
+        DEPRESSED, //you havent let go
+        UNPRESSED // its not pressed
+    }
+    ButtonPressState baybutton;
+
     @Override
     public void init() {
         this.drive = new SimpleMecanumDrive(hardwareMap);
@@ -64,12 +74,20 @@ public class Teleop extends OpMode {
         this.pullup = new PullUp(hardwareMap);
         this.plane = new PlaneLauncher(hardwareMap);
         this.intake = new Intake(hardwareMap);
+        this.baybutton = ButtonPressState.UNPRESSED;
     }
 
     @Override
     public void loop() {
         //VALIDATE
         if (gamepad1.x) {++validatecount;}
+
+        if (gamepad1.b && baybutton == ButtonPressState.UNPRESSED) {
+            baybutton = ButtonPressState.PRESSED_GOOD;
+        } else if (gamepad1.b && baybutton==ButtonPressState.PRESSED_GOOD) {
+            baybutton = ButtonPressState.DEPRESSED;
+        } else if (!gamepad1.b) baybutton = ButtonPressState.UNPRESSED;
+
         if (validatecount > 5) {validate = true;}
 
         //DRIVE
@@ -84,33 +102,36 @@ public class Teleop extends OpMode {
 
         double pos = bay.getPosition();
 
+
         switch (bayState) {
             case OPENED:
-                if (gamepad1.a) {
-                    if (Math.abs(bay.getPosition() - 0.5) < 0.05) {// 0.5 is the value when open
-                        bay.close();
-                        bayState = BayState.CLOSED;
-                        telemetry.addLine("bayState" + bayState);
-                        telemetry.update();
-                        telemetry.addLine("pos " + pos);
-                        telemetry.update();
-                    }
+                if (Math.abs(bay.getPosition() - bay.openPosLeft) < 0.05 && baybutton==ButtonPressState.PRESSED_GOOD) {
+                    bay.close();
+                    bayState = BayState.CLOSED;
+                    telemetry.addLine("bayState" + bayState);
+                    telemetry.update();
+                    telemetry.addLine("pos " + pos);
+                    telemetry.update();
                 }
+                telemetry.addLine("OPENED");
+                telemetry.update();
                 break;
 
             case CLOSED:
-                if (gamepad1.a) {
-                    if (Math.abs(bay.getPosition() - 0) < 0.05) { // 0.5 is the value when open
-                        bay.open();
-                        bayState = BayState.OPENED;
-                        telemetry.addLine("bayState" + bayState);
-                        telemetry.update();
-                        telemetry.addLine("pos " + pos);
-                        telemetry.update();
-                    }
+                if (Math.abs(bay.getPosition() - bay.closedPosLeft) < 0.05 && baybutton==ButtonPressState.PRESSED_GOOD) {
+                    bay.open();
+                    bayState = BayState.OPENED;
+                    telemetry.addLine("bayState" + bayState);
+                    telemetry.update();
+                    telemetry.addLine("pos " + pos);
+                    telemetry.update();
                 }
-                break;
 
+                double position = Math.abs(bay.getPosition() - 0);
+                telemetry.addLine("position " + position);
+                telemetry.addLine("pressed? " + baybutton.toString());
+                telemetry.update();
+                break;
             default:
                 bayState = BayState.CLOSED;
                 telemetry.addLine("bayState" + bayState);

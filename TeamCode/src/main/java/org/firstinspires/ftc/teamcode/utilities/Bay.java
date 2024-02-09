@@ -2,12 +2,15 @@ package org.firstinspires.ftc.teamcode.utilities;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
+
+@Config
 public class Bay {
     Servo bottomLeft;
     Servo bottomRight;
@@ -16,10 +19,10 @@ public class Bay {
     int pixelDistance = 30; // TODO: tune value
 
     // TODO: TUNE VALUES !!
-    double closedPosLeft = 0;
-    double openPosLeft = 0.5;
-    double closedPosRight = 1; // maybe this is supposed to be 1 and openPosRight should be 0?? idk !!
-    double openPosRight = 0.5; // what if everything is backwards and my life is alie
+    public static double closedPosLeft = 0.0;
+    public static double openPosLeft = 1.0;
+    public static double closedPosRight = 0.0;
+    public static double openPosRight = 1.0;
 
     public Bay(HardwareMap hmap) {
         this.bottomLeft = hmap.servo.get(CONFIG.bayLeft);
@@ -32,7 +35,7 @@ public class Bay {
     }
 
     public double getPosition() {
-        return bottomLeft.getPosition();
+        return (bottomLeft.getPosition() + bottomRight.getPosition()) / 2.0;
     }
 
     public void close() {
@@ -50,9 +53,4 @@ public class Bay {
 //        topLeft.setPosition(openPosLeft);
 //        topRight.setPosition(openPosRight);
 //    }
-
-
-
-
-
 }
