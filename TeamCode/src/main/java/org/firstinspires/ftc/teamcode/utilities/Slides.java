@@ -18,6 +18,7 @@ public class Slides {
     //position at initial
     int pos;
     //Current state of slide. 0 - idle, 1 - up, 2 - down
+    //TODO: consider using an enum
     int state;
 
     // Preset heights,
