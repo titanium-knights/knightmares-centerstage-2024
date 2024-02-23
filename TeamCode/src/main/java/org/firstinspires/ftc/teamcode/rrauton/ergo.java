@@ -44,6 +44,26 @@ public class ergo extends LinearOpMode {
         bay = new Bay(hardwareMap);
     }
 
+    public Trajectory toSpotTwo;
+    public Trajectory backToDropPixel;
+    public Trajectory dropPixel;
+    public Trajectory forwardFromPixel;
+    public Trajectory backOne;
+    public Trajectory backOnee;
+    public Trajectory forwardOne;
+    public Trajectory backThree;
+    public Trajectory rightHalf;
+    public Trajectory rightOne;
+    public Trajectory rightOneHalf;
+    public Trajectory leftOne;
+    public Trajectory leftHalf;
+    public Trajectory leftOneHalf;
+    public Trajectory toPaint;
+    public Trajectory forwardFromToPaint;
+    public Trajectory rightOneCloseBackDrop;
+    public Trajectory leftOneCloseBackBackDrop;
+    public Trajectory backOneCloseBackDrop;
+
     @Override
     public void runOpMode() {
         createHardware(hardwareMap);
@@ -54,69 +74,79 @@ public class ergo extends LinearOpMode {
         Pose2d startPose = new Pose2d(-35.5, 60, Math.toRadians(STARTANGLE));
         drive.setPoseEstimate(startPose);
 
-        Trajectory toSpotTwo = drive.trajectoryBuilder(new Pose2d())
+        toSpotTwo = drive.trajectoryBuilder(new Pose2d())
                 .back(33)
                 .addDisplacementMarker(this::dropPixel)
                 .build();
 
-        Trajectory backToDropPixel = drive.trajectoryBuilder(new Pose2d())
+        backToDropPixel = drive.trajectoryBuilder(new Pose2d())
                 .back(33)
                 .build();
 
-        Trajectory dropPixel = drive.trajectoryBuilder(new Pose2d())
+        dropPixel = drive.trajectoryBuilder(new Pose2d())
                 .back(8)
                 .addDisplacementMarker(this::dropPixel)
                 .build();
-        Trajectory forwardFromPixel = drive.trajectoryBuilder(new Pose2d())
+
+        forwardFromPixel = drive.trajectoryBuilder(new Pose2d())
                 .forward(8)
                 .build();
 
-        Trajectory backOne = drive.trajectoryBuilder(new Pose2d())
+        backOne = drive.trajectoryBuilder(new Pose2d())
                 .back(20)
                 .build();
 
-        Trajectory backOnee = drive.trajectoryBuilder(new Pose2d())
+        backOnee = drive.trajectoryBuilder(new Pose2d())
                 .back(30)
                 .build();
-        Trajectory forwardOne = drive.trajectoryBuilder(new Pose2d())
+
+        forwardOne = drive.trajectoryBuilder(new Pose2d())
                 .forward(30)
                 .build();
-        Trajectory backThree = drive.trajectoryBuilder(new Pose2d())
+
+        backThree = drive.trajectoryBuilder(new Pose2d())
                 .back(82)
                 .build();
-        Trajectory rightOne = drive.trajectoryBuilder(new Pose2d()) // must be between 44 and 30
+        rightHalf = drive.trajectoryBuilder(new Pose2d())
+                .strafeRight(23)
+                .build();
+        rightOne = drive.trajectoryBuilder(new Pose2d()) // must be between 44 and 30
                         .strafeRight(35)
                                 .build();
-        Trajectory rightOneHalf = drive.trajectoryBuilder(new Pose2d())
+        rightOneHalf = drive.trajectoryBuilder(new Pose2d())
                 .strafeRight(44)
                 .build();
-        Trajectory leftOne = drive.trajectoryBuilder(new Pose2d())
+
+        leftOne = drive.trajectoryBuilder(new Pose2d())
                 .strafeLeft(35)
                 .build();
-        Trajectory leftOneHalf = drive.trajectoryBuilder(new Pose2d())
+
+        leftHalf = drive.trajectoryBuilder(new Pose2d())
+                .strafeLeft(23)
+                .build();
+
+        leftOneHalf = drive.trajectoryBuilder(new Pose2d())
                 .strafeLeft(44)
                 .build();
-        Trajectory toPaint = drive.trajectoryBuilder(new Pose2d())
+
+        toPaint = drive.trajectoryBuilder(new Pose2d())
                         .back(20)
                                 .addDisplacementMarker(this::paintPixel)
-                                        .addDisplacementMarker(this::returnInit)
                                                 .build();
-        Trajectory forwardFromToPaint = drive.trajectoryBuilder(new Pose2d())
+        forwardFromToPaint = drive.trajectoryBuilder(new Pose2d())
                         .forward(5)
                                 .build();
-        Trajectory rightOneCloseBackDrop = drive.trajectoryBuilder(new Pose2d())
-                .addDisplacementMarker(this::liftArm)
+
+        rightOneCloseBackDrop = drive.trajectoryBuilder(new Pose2d())
                 .strafeRight(35)
                 .build();
 
-        Trajectory leftOneCloseBackBackDrop = drive.trajectoryBuilder(new Pose2d())
-                .addDisplacementMarker(this::liftArm)
+        leftOneCloseBackBackDrop = drive.trajectoryBuilder(new Pose2d())
                 .strafeLeft(35)
                 .build();
 
-        Trajectory backOneCloseBackDrop = drive.trajectoryBuilder(new Pose2d())
+        backOneCloseBackDrop = drive.trajectoryBuilder(new Pose2d())
                         .back(20)
-                                .addDisplacementMarker(this::dropArm)
                                         .build();
 
         waitForStart();
@@ -138,30 +168,13 @@ public class ergo extends LinearOpMode {
         stick.unlock();
     }
     public void paintPixel() {
-        sleep(200);
-        sleep(200);
-        slides.todrop();
-        sleep(2000);
-        sleep(2000);
+        slides.low();
+        sleep(500);
         bay.open();
         sleep(500);
-    }
-    public void returnInit() {
         bay.close();
-        sleep(200);
-        sleep(200);
-        slides.tozero();
-        sleep(2000);
-        sleep(200);
-        slides.low();
         sleep(500);
-    }
-
-    public void liftArm() {
-        slides.low();
-    }
-
-    public void dropArm() {
         slides.tozero();
     }
+
 }
