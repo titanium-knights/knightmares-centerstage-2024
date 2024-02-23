@@ -29,4 +29,6 @@ public class CONFIG {
     public static String bayLeft = "bL";
     public static String bayRight = "bR";
 
+    //stick
+    public static String stick = "stick";
 }
