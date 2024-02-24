@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.rrauton;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -12,8 +11,8 @@ import org.firstinspires.ftc.teamcode.utilities.Intake;
 import org.firstinspires.ftc.teamcode.utilities.Stick;
 import org.firstinspires.ftc.teamcode.utilities.TwoPieceVision;
 
-@Autonomous(name="MudasirBlueRight", group="Autonomous")
-public class BlueRightMud extends ergo {
+@Autonomous(name="MudasirBlueLeft", group="Autonomous")
+public class BlueBackboardMud extends ergo {
 
     public SampleMecanumDrive drive;
     public Stick stick;
@@ -22,6 +21,8 @@ public class BlueRightMud extends ergo {
     public Intake intake;
     public Bay bay;
     public int rot = 76; // intended to be 90 but the turn overturns it
+    // 76 if full battery
+    // 110 if at very low battery
     //TODO etc. etc., and add to the createHardware method
 
     public void createHardware(HardwareMap hmap) {
@@ -42,7 +43,7 @@ public class BlueRightMud extends ergo {
         waitForStart();
 
         //TODO check this value
-        Pose2d startPose = new Pose2d(-35.5, 60, Math.toRadians(90));
+        Pose2d startPose = new Pose2d(11.5, 60, Math.toRadians(90));
         drive.setPoseEstimate(startPose);
 
         if(isStopRequested()) return;
@@ -55,12 +56,13 @@ public class BlueRightMud extends ergo {
                 drive.turn(Math.toRadians(rot));
                 drive.followTrajectory(dropPixel);
                 drive.followTrajectory(forwardFromPixel);
-                drive.turn(Math.toRadians(-rot));
-                drive.followTrajectory(backOnee);
-                drive.turn(Math.toRadians(rot));
-                drive.followTrajectory(backThree);
+                drive.followTrajectory(leftHalf);
+                drive.followTrajectory(backOne);
                 drive.followTrajectory(rightOne);
                 drive.followTrajectory(toPaint);
+                drive.followTrajectory(forwardFromToPaint);
+                drive.followTrajectory(rightOne);
+                drive.followTrajectory(backOneCloseBackDrop);
                 break;
             case 3:
                 drive.followTrajectory(backToDropPixel);
@@ -68,22 +70,26 @@ public class BlueRightMud extends ergo {
                 drive.followTrajectory(dropPixel);
                 drive.followTrajectory(forwardFromPixel);
                 drive.turn(Math.toRadians(rot));
-                drive.followTrajectory(backOne);
                 drive.turn(Math.toRadians(rot));
-                drive.followTrajectory(backThree);
-                drive.followTrajectory(rightHalf);
+                drive.followTrajectory(backOne);
                 drive.followTrajectory(toPaint);
+                drive.followTrajectory(forwardFromToPaint);
+                drive.followTrajectory(rightOneHalf);
+                drive.followTrajectory(backOneCloseBackDrop);
                 break;
             case 2:
             default:
                 drive.followTrajectory(toSpotTwo);
-                drive.followTrajectory(backOne);
+                drive.followTrajectory(forwardFromPixel);
                 drive.turn(Math.toRadians(rot));
-                drive.followTrajectory(backThree);
-                drive.followTrajectory(rightOne);
+                drive.followTrajectory(backOnee);
                 drive.followTrajectory(toPaint);
+                drive.followTrajectory(forwardFromToPaint);
+                drive.followTrajectory(rightOne);
+                drive.followTrajectory(backOneCloseBackDrop);
                 break;
         }
 
     }
+
 }
