@@ -38,7 +38,19 @@ public class TestDrivetrain extends OpMode {
 
         //Notation of a ? b : c means if a is true do b, else do c.
         double multiplier = normalPower;
-        drive.move(x * multiplier, y * multiplier, -turn * multiplier);
+
+        if (gamepad1.dpad_up) {
+            drive.moveBR(x * multiplier, y * multiplier, -turn * multiplier);
+        }
+        if (gamepad1.dpad_down) {
+            drive.moveBL(x * multiplier, y * multiplier, -turn * multiplier);
+        }
+        if (gamepad1.dpad_right) {
+            drive.moveFR(x * multiplier, y * multiplier, -turn * multiplier);
+        }
+        if (gamepad1.dpad_left) {
+            drive.moveFL(x * multiplier, y * multiplier, -turn * multiplier);
+        }
 
     }
 }
