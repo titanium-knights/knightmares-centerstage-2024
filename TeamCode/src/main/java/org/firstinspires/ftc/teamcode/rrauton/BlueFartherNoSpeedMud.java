@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.utilities.Slides;
 import org.firstinspires.ftc.teamcode.utilities.Stick;
 import org.firstinspires.ftc.teamcode.utilities.TwoPieceVision;
 
-@Autonomous(name="MudasirRedRight", group="Autonomous")
-public class RedBackboardSpikeParkMud extends ergo {
+@Autonomous(name="MudasirBlueRight", group="Autonomous")
+public class BlueFartherNoSpeedMud extends ergo {
 
     public SampleMecanumDrive drive;
     public Stick stick;
@@ -52,32 +52,50 @@ public class RedBackboardSpikeParkMud extends ergo {
 
         switch (pos) {
             case 1:
-                drive.followTrajectory(backToDropPixel);
-                drive.turn(Math.toRadians(rot));
-                drive.followTrajectory(dropPixel);
+                drive.followTrajectory(backOnee);
+                drive.turn(Math.toRadians(-rot));
+                drive.followTrajectory(backOnee);
                 drive.followTrajectory(forwardFromPixel);
                 drive.turn(Math.toRadians(rot));
                 drive.turn(Math.toRadians(rot));
-                drive.followTrajectory(leftOne);
                 drive.followTrajectory(backOnee);
-                drive.followTrajectory(backOnee);
+                drive.followTrajectory(dropPixel);
+                drive.followTrajectory(rightOne);
+                drive.followTrajectory(backThree);
+                drive.followTrajectory(backOne);
                 break;
             case 3:
-                drive.followTrajectory(backToDropPixel);
+                drive.followTrajectory(backOnee);
+                drive.followTrajectory(backOnee);
                 drive.turn(Math.toRadians(-rot));
-                drive.followTrajectory(dropPixel);
+                drive.followTrajectory(backOnee);
                 drive.followTrajectory(forwardFromPixel);
+                drive.followTrajectory(forwardOne);
                 drive.followTrajectory(leftOne);
-                drive.followTrajectory(backOnee);
-                drive.followTrajectory(backOnee);
+                drive.followTrajectory(backToDropPixel);
+                drive.followTrajectory(dropPixel);
+                drive.followTrajectory(rightOne);
+                drive.turn(Math.toRadians(rot));
+                drive.turn(Math.toRadians(rot));
+                drive.followTrajectory(backThree);
+                drive.followTrajectory(backOne);
                 break;
             case 2:
             default:
-                drive.followTrajectory(toSpotTwo);
-                drive.followTrajectory(forwardOne);
+                drive.followTrajectory(backOnee);
                 drive.turn(Math.toRadians(-rot));
                 drive.followTrajectory(backOnee);
-                drive.followTrajectory(backOnee);
+                drive.followTrajectory(forwardFromPixel);
+                drive.turn(Math.toRadians(rot));
+                drive.followTrajectory(rightOne);
+                drive.followTrajectory(backToDropPixel);
+                drive.followTrajectory(dropPixel);
+                drive.turn(Math.toRadians(rot));
+                drive.followTrajectory(forwardOne);
+                drive.followTrajectory(leftOne);
+                drive.followTrajectory(backThree);
+                drive.followTrajectory(backOne);
+                drive.followTrajectory(backOne);
                 break;
         }
 

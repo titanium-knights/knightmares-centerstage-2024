@@ -57,8 +57,8 @@ public class BlueBackboardSpikeParkMud extends ergo {
                 drive.followTrajectory(dropPixel);
                 drive.followTrajectory(forwardFromPixel);
                 drive.followTrajectory(rightOne);
-                drive.followTrajectory(backOne);
-                drive.followTrajectory(backOne);
+                drive.followTrajectory(backOnee);
+                drive.followTrajectory(backOnee);
                 break;
             case 3:
                 drive.followTrajectory(backToDropPixel);
@@ -68,8 +68,8 @@ public class BlueBackboardSpikeParkMud extends ergo {
                 drive.turn(Math.toRadians(rot));
                 drive.turn(Math.toRadians(rot));
                 drive.followTrajectory(rightOne);
-                drive.followTrajectory(backOne);
-                drive.followTrajectory(backOne);
+                drive.followTrajectory(backOnee);
+                drive.followTrajectory(backOnee);
                 break;
             case 2:
             default:
