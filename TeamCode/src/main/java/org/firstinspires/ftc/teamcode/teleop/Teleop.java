@@ -48,7 +48,7 @@ public class Teleop extends OpMode {
         NEUTRAL,
         REACH_UP
     }
-    PullUpState pullupstate = PullUpState.NEUTRAL;
+    PullUpState pullupstate = PullUpState.REACH_UP;
 
     public enum BayState {
         OPENED,
@@ -159,7 +159,7 @@ public class Teleop extends OpMode {
                 if (Math.abs(slides.getEncoder() - 0) < 10) { // dropheight
                     if (gamepad1.left_trigger > 0.1f) {
                         intake.runIntake();
-                        telemetry.addLine("SLIDE_BOTTOM left-trigger");
+                        telemetry.addData("pos", slides.getEncoder());
                         telemetry.update();
 
                     }
@@ -167,28 +167,27 @@ public class Teleop extends OpMode {
                         slides.low();
                         intake.stopIntake();
                         slideState = SlideState.SLIDE_LOW;
-                        telemetry.addLine("SLIDE_BOTTOM right-trigger");
+                        telemetry.addData("pos", slides.getEncoder());
                         telemetry.update();
-
                     }
                 }
                 break;
             case SLIDE_LOW:
                 telemetry.addData("encoder position", slides.getEncoder());
                 telemetry.update();
-                if (Math.abs(slides.getEncoder() - 1472) < 10) { // lowheight
+                if (Math.abs(slides.getEncoder() - 100) < 10) { // lowheight, changed 1400 something to 100
                     if (gamepad1.left_trigger > 0.1f) {
                         slides.tozero();
                         intake.runIntake();
                         slideState = SlideState.SLIDE_BOTTOM;
-                        telemetry.addLine("SLIDE_LOW left-trigger");
+                        telemetry.addData("pos", slides.getEncoder());
                         telemetry.update();
                     }
                     if (gamepad1.right_trigger > 0.1f) {
                         slides.middle();
                         intake.stopIntake();
                         slideState = SlideState.SLIDE_MEDIUM;
-                        telemetry.addLine("SLIDE_LOW right-trigger");
+                        telemetry.addData("pos", slides.getEncoder());
                         telemetry.update();
                     }
                 }
@@ -199,14 +198,14 @@ public class Teleop extends OpMode {
                         slides.tozero();
                         intake.runIntake();
                         slideState = SlideState.SLIDE_BOTTOM;
-                        telemetry.addLine("SLIDE_MEDIUM left-trigger");
+                        telemetry.addData("pos", slides.getEncoder());
                         telemetry.update();
                     }
                     if (gamepad1.right_trigger > 0.1f) {
                         slides.high();
                         intake.stopIntake();
                         slideState = SlideState.SLIDE_HIGH;
-                        telemetry.addLine("SLIDE_MEDIUM right-trigger");
+                        telemetry.addData("pos", slides.getEncoder());
                         telemetry.update();
                     }
                 }
@@ -217,7 +216,7 @@ public class Teleop extends OpMode {
                         slides.tozero();
                         intake.runIntake();
                         slideState = SlideState.SLIDE_BOTTOM;
-                        telemetry.addLine("SLIDE_HIGH left-trigger");
+                        telemetry.addData("pos", slides.getEncoder());
                         telemetry.update();
                     }
                 }
@@ -229,24 +228,37 @@ public class Teleop extends OpMode {
         }
 
         //PULL UP
-        switch (pullupstate) {
-            case NEUTRAL:
-                if (gamepad1.x && gamepad1.dpad_up) {
-                    pullup.manualLeftUp();
-                    pullup.manualRightUp();
-                    pullupstate = PullUpState.REACH_UP;
-                }
-                break;
-            case REACH_UP:
-                if (gamepad1.dpad_up) {
-                    pullup.manualLeftDown();
-                    pullup.manualRightDown();
-                    pullupstate = PullUpState.NEUTRAL;
-                }
-                break;
-            default:
-                pullupstate = PullUpState.NEUTRAL;
+        if (gamepad1.x && gamepad1.dpad_up) {
+            pullup.manualLeftUp();
+            pullup.manualRightUp();
+            pullupstate = PullUpState.REACH_UP;
         }
+        if (gamepad1.dpad_down) {
+            pullup.manualLeftDown();
+            pullup.manualRightDown();
+            pullupstate = PullUpState.NEUTRAL;
+        }
+//        switch (pullupstate) {
+//            case NEUTRAL:
+//                if (gamepad1.x && gamepad1.dpad_up) {
+//                    pullup.manualLeftUp();
+//                    pullup.manualRightUp();
+//                    pullupstate = PullUpState.REACH_UP;
+//                }
+//                break;
+//            case REACH_UP:
+//                telemetry.addData("pullup1pos", + pullup.getPosition1());
+//                telemetry.addData("pullup2pos", + pullup.getPosition2());
+//                telemetry.update();
+//                if (gamepad1.dpad_up) {
+//                    pullup.manualLeftDown();
+//                    pullup.manualRightDown();
+//                    pullupstate = PullUpState.NEUTRAL;
+//                }
+//                break;
+//            default:
+//                pullupstate = PullUpState.NEUTRAL;
+//        }
 
         //PLANE LAUNCHER
         if (gamepad1.x && gamepad1.dpad_right) {

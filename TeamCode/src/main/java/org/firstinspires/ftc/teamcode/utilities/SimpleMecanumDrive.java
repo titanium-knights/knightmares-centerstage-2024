@@ -22,7 +22,7 @@ public class SimpleMecanumDrive {
 
         fl.setDirection(DcMotorSimple.Direction.FORWARD);
         bl.setDirection(DcMotorSimple.Direction.REVERSE);
-        fr.setDirection(DcMotorSimple.Direction.REVERSE);
+        fr.setDirection(DcMotorSimple.Direction.REVERSE); // origina lly FORWARD
         br.setDirection(DcMotorSimple.Direction.REVERSE);
 
         directions.put(fl, new double[]{1, 1});

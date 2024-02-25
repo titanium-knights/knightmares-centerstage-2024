@@ -32,9 +32,13 @@ public class PullUp {
         pullUpMotor2.setZeroPowerBehavior(BRAKE);
     }
 
-    public int[] getPosition(){
-        return new int[] {pullUpMotor1.getCurrentPosition(), pullUpMotor2.getCurrentPosition()};
+    public int getPosition1(){
+        return pullUpMotor1.getCurrentPosition();
     }
+    public int getPosition2(){
+        return pullUpMotor2.getCurrentPosition();
+    }
+
 
     public boolean isBusy1(){
         return pullUpMotor1.isBusy();
@@ -64,37 +68,41 @@ public class PullUp {
         setTargetPosition(topHeight);
         pullUpMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         pullUpMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         // run to position is always in presets or else itll be jittery
-        setPower(0.9);
+        pullUpMotor1.setPower(0.9);
+        pullUpMotor2.setPower(0.9);
     }
 
     public void liftUp() {
         setTargetPosition(0);
         pullUpMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         pullUpMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         // run to position is always in presets or else itll be jittery
-        setPower(0.9);
+        pullUpMotor1.setPower(-0.9);
+        pullUpMotor2.setPower(-0.9);
     }
 
     // pullUpMotor1 and 2 are reversed. If you want it to go up, power will be negative. If you want it to go down, power will be positive.
-    public void manualRightDown(){
-        pullUpMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        pullUpMotor2.setPower(-1);
-    }
-
-    public void manualRightUp(){
+    public void manualRightDown(){ // -1
         pullUpMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         pullUpMotor2.setPower(1);
     }
 
-    public void manualLeftUp(){
-        pullUpMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        pullUpMotor1.setPower(1);
+    public void manualRightUp(){ // 1
+        pullUpMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        pullUpMotor2.setPower(-1);
     }
 
-    public void manualLeftDown(){
+    public void manualLeftUp(){ // 1
         pullUpMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         pullUpMotor1.setPower(-1);
+    }
+
+    public void manualLeftDown(){ // -1
+        pullUpMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        pullUpMotor1.setPower(1);
     }
 
     public void stopLeft(){

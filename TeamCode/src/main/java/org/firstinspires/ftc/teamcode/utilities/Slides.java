@@ -26,7 +26,7 @@ public class Slides {
     int maxheight = 3481;
 
     int midheight = 2424;
-    int lowheight = 1472;
+    int lowheight = 100; // 1472
     int dropheight = 800;
 
     public Slides(HardwareMap hmap){
