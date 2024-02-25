@@ -61,11 +61,17 @@ public class Teleop extends OpMode {
 
     enum ButtonPressState {
         PRESSED_GOOD, //the first time we see the button pressed
-        DEPRESSED, //you havent let go
+        DEPRESSED, //you haven't let go
         UNPRESSED // its not pressed
     }
     ButtonPressState baybutton;
+    ButtonPressState intakeButton;
+    ButtonPressState slideButton;
 
+    ButtonPressState slideManual;
+    ButtonPressState slideManualUp;
+
+    boolean intakeRunning = false;
     @Override
     public void init() {
         this.drive = new SimpleMecanumDrive(hardwareMap);
@@ -75,12 +81,17 @@ public class Teleop extends OpMode {
         this.plane = new PlaneLauncher(hardwareMap);
         this.intake = new Intake(hardwareMap);
         this.baybutton = ButtonPressState.UNPRESSED;
+        this.intakeButton = ButtonPressState.UNPRESSED;
+        this.slideButton = ButtonPressState.UNPRESSED;
+        this.slideManual = ButtonPressState.UNPRESSED;
+        this.slideManualUp = ButtonPressState.UNPRESSED;
     }
 
     @Override
     public void loop() {
         //VALIDATE
-        if (gamepad1.x) {++validatecount;}
+        if (gamepad1.dpad_up) {++validatecount;}
+        if (validatecount > 5) {validate = true;}
 
         if (gamepad1.b && baybutton == ButtonPressState.UNPRESSED) {
             baybutton = ButtonPressState.PRESSED_GOOD;
@@ -88,18 +99,53 @@ public class Teleop extends OpMode {
             baybutton = ButtonPressState.DEPRESSED;
         } else if (!gamepad1.b) baybutton = ButtonPressState.UNPRESSED;
 
-        if (validatecount > 5) {validate = true;}
+        if (gamepad1.left_trigger>0.1f && slideButton == ButtonPressState.UNPRESSED) {
+            slideButton = ButtonPressState.PRESSED_GOOD;
+        } else if (gamepad1.left_trigger>0.1f && slideButton==ButtonPressState.PRESSED_GOOD) {
+            slideButton = ButtonPressState.DEPRESSED;
+        } else if (gamepad1.left_trigger<0.1f) slideButton = ButtonPressState.UNPRESSED;
+
+        if (gamepad1.right_trigger > 0.1f && intakeButton==ButtonPressState.UNPRESSED) {
+            intakeButton = ButtonPressState.PRESSED_GOOD;
+        } else if (gamepad1.right_trigger > 0.1f && intakeButton==ButtonPressState.PRESSED_GOOD) {
+            intakeButton = ButtonPressState.DEPRESSED;
+        } else if (gamepad1.right_trigger < 0.1f) intakeButton=ButtonPressState.UNPRESSED;
+
+        if (intakeButton==ButtonPressState.PRESSED_GOOD && intakeRunning) {
+            intake.stopIntake();
+            intakeRunning = false;
+        } else if (intakeButton==ButtonPressState.PRESSED_GOOD) {
+            intakeRunning = true;
+            intake.runIntake();
+        }
+
+        if (gamepad1.right_bumper && slideManual == ButtonPressState.UNPRESSED) {
+            slideManual = ButtonPressState.PRESSED_GOOD;
+        } else if (gamepad1.right_bumper && slideManual==ButtonPressState.PRESSED_GOOD) {
+            slideManual = ButtonPressState.DEPRESSED;
+        } else if (!gamepad1.right_bumper) slideManual = ButtonPressState.UNPRESSED;
+
+        if (gamepad1.left_bumper && slideManualUp == ButtonPressState.UNPRESSED) {
+            slideManualUp = ButtonPressState.PRESSED_GOOD;
+        } else if (gamepad1.left_bumper && slideManualUp==ButtonPressState.PRESSED_GOOD) {
+            slideManualUp = ButtonPressState.DEPRESSED;
+        } else if (!gamepad1.left_bumper) slideManualUp = ButtonPressState.UNPRESSED;
+
+        if (gamepad1.right_bumper){//slideManual==ButtonPressState.PRESSED_GOOD) {
+            slides.downHold();
+        } else if (gamepad1.left_bumper){//slideManualUp==ButtonPressState.PRESSED_GOOD) {
+            slides.upHold();
+        } else {
+            slides.stop();
+        }
 
         //DRIVE
         float x = gamepad1.left_stick_x;
         float y = gamepad1.left_stick_y;
         float turn = gamepad1.right_stick_x;
-        move(-x, y, turn);
+        move(x, -y, turn);
 
         // BAY
-
-        // BAY TRY 1
-
         double pos = bay.getPosition();
 
         if (gamepad1.b) {
@@ -109,119 +155,95 @@ public class Teleop extends OpMode {
             bay.open();
         }
 
-
-        switch (bayState) {
-            case OPENED:
-                if (Math.abs(bay.getPosition() - bay.openPosLeft) < 0.05 && baybutton==ButtonPressState.PRESSED_GOOD) {
-                    bay.close();
-                    bayState = BayState.CLOSED;
-                    telemetry.addLine("bayState" + bayState);
-                    telemetry.update();
-                    telemetry.addLine("pos " + pos);
-                    telemetry.update();
-                }
-                telemetry.addLine("OPENED");
-                telemetry.update();
-                break;
-
-            case CLOSED:
-                if (Math.abs(bay.getPosition() - bay.closedPosLeft) < 0.05 && baybutton==ButtonPressState.PRESSED_GOOD) {
-                    bay.open();
-                    bayState = BayState.OPENED;
-                    telemetry.addLine("bayState" + bayState);
-                    telemetry.update();
-                    telemetry.addLine("pos " + pos);
-                    telemetry.update();
-                }
-
-                double position = Math.abs(bay.getPosition() - 0);
-                telemetry.addLine("position " + position);
-                telemetry.addLine("pressed? " + baybutton.toString());
-                telemetry.update();
-                break;
-            default:
-                bayState = BayState.CLOSED;
-                telemetry.addLine("bayState" + bayState);
-                telemetry.update();
-        }
-
-        // BAY TRY 2
-//        boolean closed = true;
-//        double pos = bay.getPosition();
+//        switch (bayState) {
+//            case OPENED:
+//                if (Math.abs(bay.getPosition() - Bay.openPosLeft) < 0.05 && baybutton==ButtonPressState.PRESSED_GOOD) {
+//                    bay.close();
+//                    bayState = BayState.CLOSED;
+//                    telemetry.addLine("bayState" + bayState);
+//                    telemetry.update();
+//                    telemetry.addLine("pos " + pos);
+//                    telemetry.update();
+//                }
+//                telemetry.addLine("OPENED");
+//                telemetry.update();
+//                break;
 //
-//        if (gamepad1.a) {
-//            if (pos <= bayBuffer) {
-//                bay.open();
-//                closed = false;
-//            }
-//            if (pos >= (0.5-bayBuffer)) { // 0.5 is the value when open
-//                bay.close();
-//                closed = true;
-//            }
+//            case CLOSED:
+//                if (Math.abs(bay.getPosition() - Bay.closedPosLeft) < 0.05 && baybutton==ButtonPressState.PRESSED_GOOD) {
+//                    bay.open();
+//                    bayState = BayState.OPENED;
+//                    telemetry.addLine("bayState" + bayState);
+//                    telemetry.update();
+//                    telemetry.addLine("pos " + pos);
+//                    telemetry.update();
+//                }
+//
+//                double position = Math.abs(bay.getPosition() - 0);
+//                telemetry.addLine("position " + position);
+//                telemetry.addLine("pressed? " + baybutton.toString());
+//                telemetry.update();
+//                break;
+//            default:
+//                bayState = BayState.CLOSED;
+//                telemetry.addLine("bayState" + bayState);
+//                telemetry.update();
 //        }
 
         // SLIDES & INTAKE
         switch (slideState) {
             case SLIDE_BOTTOM:
-                if (Math.abs(slides.getEncoder() - 0) < 10) { // dropheight
-                    if (gamepad1.left_trigger > 0.1f) {
-                        intake.runIntake();
+                if (Math.abs(slides.getEncoder() - 0) < 10) { // drop height
+                    if (slideButton==ButtonPressState.PRESSED_GOOD) {
+                        slideState = SlideState.SLIDE_HIGH;
                         telemetry.addData("pos", slides.getEncoder());
                         telemetry.update();
-
-                    }
-                    if (gamepad1.right_trigger > 0.1f) {
-                        slides.low();
-                        intake.stopIntake();
-                        slideState = SlideState.SLIDE_LOW;
-                        telemetry.addData("pos", slides.getEncoder());
-                        telemetry.update();
+                        slides.high();
                     }
                 }
                 break;
             case SLIDE_LOW:
-                telemetry.addData("encoder position", slides.getEncoder());
+                telemetry.addData("u shouldnt see this lol but encoder position", slides.getEncoder());
                 telemetry.update();
-                if (Math.abs(slides.getEncoder() - 100) < 10) { // lowheight, changed 1400 something to 100
-                    if (gamepad1.left_trigger > 0.1f) {
-                        slides.tozero();
-                        intake.runIntake();
-                        slideState = SlideState.SLIDE_BOTTOM;
-                        telemetry.addData("pos", slides.getEncoder());
-                        telemetry.update();
-                    }
-                    if (gamepad1.right_trigger > 0.1f) {
-                        slides.middle();
-                        intake.stopIntake();
-                        slideState = SlideState.SLIDE_MEDIUM;
-                        telemetry.addData("pos", slides.getEncoder());
-                        telemetry.update();
-                    }
-                }
+//                if (Math.abs(slides.getEncoder() - 10) < 10) { // lowheight, changed 1400 something to 100
+//                    if (gamepad1.left_trigger > 0.1f) {
+//                        slides.tozero();
+//                        intake.runIntake();
+//                        slideState = SlideState.SLIDE_BOTTOM;
+//                        telemetry.addData("pos", slides.getEncoder());
+//                        telemetry.update();
+//                    }
+//                    if (gamepad1.right_trigger > 0.1f) {
+//                        slides.middle();
+//                        intake.stopIntake();
+//                        slideState = SlideState.SLIDE_MEDIUM;
+//                        telemetry.addData("pos", slides.getEncoder());
+//                        telemetry.update();
+//                    }
+//                }
                 break;
-            case SLIDE_MEDIUM:
-                if (Math.abs(slides.getEncoder() - 200) < 10) { // mid height 2424
-                    if (gamepad1.left_trigger > 0.1f) {
-                        slides.tozero();
-                        intake.runIntake();
-                        slideState = SlideState.SLIDE_BOTTOM;
-                        telemetry.addData("pos", slides.getEncoder());
-                        telemetry.update();
-                    }
-                    if (gamepad1.right_trigger > 0.1f) {
-                        slides.high();
-                        intake.stopIntake();
-                        slideState = SlideState.SLIDE_HIGH;
-                        telemetry.addData("pos", slides.getEncoder());
-                        telemetry.update();
-                    }
-                }
-                break;
+//            case SLIDE_MEDIUM:
+//                if (Math.abs(slides.getEncoder() - 20) < 10) { // mid height 2424
+//                    if (gamepad1.left_trigger > 0.1f) {
+//                        slides.tozero();
+//                        intake.runIntake();
+//                        slideState = SlideState.SLIDE_BOTTOM;
+//                        telemetry.addData("pos", slides.getEncoder());
+//                        telemetry.update();
+//                    }
+//                    if (gamepad1.right_trigger > 0.1f) {
+//                        slides.high();
+//                        intake.stopIntake();
+//                        slideState = SlideState.SLIDE_HIGH;
+//                        telemetry.addData("pos", slides.getEncoder());
+//                        telemetry.update();
+//                    }
+//                }
+//                break;
             case SLIDE_HIGH:
-                if (Math.abs(slides.getEncoder() - 300) < 10) { // high height 3481
-                    if (gamepad1.left_trigger > 0.1f) {
+                if (Math.abs(slides.getEncoder() - 30) < 10) { // high height 3481
+                    if (slideButton==ButtonPressState.PRESSED_GOOD) {
                         slides.tozero();
-                        intake.runIntake();
                         slideState = SlideState.SLIDE_BOTTOM;
                         telemetry.addData("pos", slides.getEncoder());
                         telemetry.update();
@@ -235,7 +257,7 @@ public class Teleop extends OpMode {
         }
 
         //PULL UP
-        if (gamepad1.x && gamepad1.dpad_up) {
+        if (gamepad1.dpad_up) {
             pullup.manualLeftUp();
             pullup.manualRightUp();
             pullupstate = PullUpState.REACH_UP;
@@ -268,7 +290,7 @@ public class Teleop extends OpMode {
 //        }
 
         //PLANE LAUNCHER
-        if (gamepad1.x && gamepad1.dpad_right) {
+        if (gamepad1.y) {
             plane.reset();
             telemetry.addData("pos: ", plane.getPosition());
             telemetry.update();

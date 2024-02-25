@@ -20,7 +20,7 @@ public class BlueBackboardSpikeParkMud extends ergo {
     public Slides slides;
     public Intake intake;
     public Bay bay;
-    public int rot = 76; // intended to be 90 but the turn overturns it
+    public int rot = 84; // intended to be 90 but the turn overturns it
     // 76 if full battery
     // 110 if at very low battery
     //TODO etc. etc., and add to the createHardware method

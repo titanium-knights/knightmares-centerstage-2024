@@ -56,7 +56,7 @@ public class RedSpikeAaAA extends ergo {
                 .build();
 
         dropPixel = drive.trajectoryBuilder(new Pose2d())
-                .back(8*M)
+                .back(4*M)
                 .addDisplacementMarker(this::dropPixel)
                 .build();
 

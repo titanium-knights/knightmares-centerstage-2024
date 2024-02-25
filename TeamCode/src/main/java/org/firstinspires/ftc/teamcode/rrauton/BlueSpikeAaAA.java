@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.rrauton;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.utilities.Intake;
 import org.firstinspires.ftc.teamcode.utilities.Slides;
 import org.firstinspires.ftc.teamcode.utilities.Stick;
 
+@Config
 @Autonomous(name="BlueSpikeAaAA", group="Autonomous")
 public class BlueSpikeAaAA extends LinearOpMode {
 
@@ -49,16 +51,16 @@ public class BlueSpikeAaAA extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         Trajectory toSpotTwo = drive.trajectoryBuilder(new Pose2d())
-                .back(22*M)
+                .back(20*M)
                 .addDisplacementMarker(this::dropPixel)
                 .build();
 
         Trajectory backToDropPixel = drive.trajectoryBuilder(new Pose2d())
-                .back(22*M)
+                .back(20*M)
                 .build();
 
         Trajectory dropPixel = drive.trajectoryBuilder(new Pose2d())
-                .back(8*M)
+                .back(6*M)
                 .addDisplacementMarker(this::dropPixel)
                 .build();
 

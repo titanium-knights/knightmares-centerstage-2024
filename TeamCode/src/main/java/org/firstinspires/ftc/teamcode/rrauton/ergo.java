@@ -32,7 +32,7 @@ public class ergo extends LinearOpMode {
     public Slides slides;
     public Intake intake;
     public Bay bay;
-    public int rot = 65; // intended to be 90 but the turn overturns it
+    public static int rot = 70; // intended to be 90 but the turn overturns it
     // 65-76 if full battery
     // 110 if at very low battery
     //TODO etc. etc., and add to the createHardware method

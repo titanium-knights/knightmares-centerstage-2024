@@ -23,10 +23,10 @@ public class Slides {
 
     // Preset heights,
     // TODO: CALIBRATE
-    int maxheight = 300; // 3481
+    int maxheight = 25; // 3481
 
-    int midheight = 200; // 2424
-    int lowheight = 100; // 1472
+    int midheight = 20; // 2424
+    int lowheight = 10; // 1472
     int dropheight = 800;
 
     public Slides(HardwareMap hmap){
@@ -120,7 +120,7 @@ public class Slides {
             setPower(0);
             return;
         }
-        if (state == 1 && pos >= midheight + 1500){
+        if (state == 1 && pos >= midheight + 15){
             setPower(1);
             pos = getEncoder();
             return;

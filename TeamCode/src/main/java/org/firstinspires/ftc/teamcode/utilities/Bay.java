@@ -19,10 +19,10 @@ public class Bay {
     int pixelDistance = 30; // TODO: tune value
 
     // TODO: TUNE VALUES !!
-    public static double closedPosLeft = 0.5;
-    public static double openPosLeft = 1.0;
-    public static double closedPosRight = 0.5;
-    public static double openPosRight = 1.0;
+    public static double closedPosLeft = 0.25;
+    public static double openPosLeft = 1;
+    public static double closedPosRight = 1;
+    public static double openPosRight = 0.25;
 
     public Bay(HardwareMap hmap) {
         this.bottomLeft = hmap.servo.get(CONFIG.bayLeft);
