@@ -193,7 +193,7 @@ public class Teleop extends OpMode {
                 }
                 break;
             case SLIDE_MEDIUM:
-                if (Math.abs(slides.getEncoder() - 2424) < 10) { // mid height
+                if (Math.abs(slides.getEncoder() - 200) < 10) { // mid height 2424
                     if (gamepad1.left_trigger > 0.1f) {
                         slides.tozero();
                         intake.runIntake();
@@ -211,7 +211,7 @@ public class Teleop extends OpMode {
                 }
                 break;
             case SLIDE_HIGH:
-                if (Math.abs(slides.getEncoder() - 3481) < 10) { // high height
+                if (Math.abs(slides.getEncoder() - 300) < 10) { // high height 3481
                     if (gamepad1.left_trigger > 0.1f) {
                         slides.tozero();
                         intake.runIntake();
