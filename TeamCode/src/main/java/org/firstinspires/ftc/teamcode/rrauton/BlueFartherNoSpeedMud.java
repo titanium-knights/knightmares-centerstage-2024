@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.utilities.Slides;
 import org.firstinspires.ftc.teamcode.utilities.Stick;
 import org.firstinspires.ftc.teamcode.utilities.TwoPieceVision;
 
-@Autonomous(name="MudasirBlueRight", group="Autonomous")
+@Autonomous(name="MudasirBlueRightFAR", group="Autonomous")
 public class BlueFartherNoSpeedMud extends ergo {
 
     public SampleMecanumDrive drive;
