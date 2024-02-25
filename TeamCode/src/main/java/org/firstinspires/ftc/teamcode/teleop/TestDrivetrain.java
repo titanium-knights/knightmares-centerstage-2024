@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.utilities.SimpleMecanumDrive;
 
 @Config
-@TeleOp(name="DriveTrain Teleop")
+@TeleOp(name="DriveTrain only Teleop")
 public class TestDrivetrain extends OpMode {
     SimpleMecanumDrive drive;
 
