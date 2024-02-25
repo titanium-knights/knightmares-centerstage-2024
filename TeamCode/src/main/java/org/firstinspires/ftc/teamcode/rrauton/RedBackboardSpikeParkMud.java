@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.utilities.Slides;
 import org.firstinspires.ftc.teamcode.utilities.Stick;
 import org.firstinspires.ftc.teamcode.utilities.TwoPieceVision;
 
-@Autonomous(name="MudasirRedRight", group="Autonomous")
+@Autonomous(name="MudasirRedRightShawnMoment", group="Autonomous")
 public class RedBackboardSpikeParkMud extends ergo {
 
     public SampleMecanumDrive drive;
