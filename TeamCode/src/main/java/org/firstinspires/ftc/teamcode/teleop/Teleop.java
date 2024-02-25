@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
+import android.widget.Button;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -94,7 +96,7 @@ public class Teleop extends OpMode {
         float x = gamepad1.left_stick_x;
         float y = gamepad1.left_stick_y;
         float turn = gamepad1.right_stick_x;
-        move(-x, y, turn);
+        move(x, -y, turn);
 
         // BAY
 
