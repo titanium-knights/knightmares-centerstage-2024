@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.pipelines;
 
+import com.acmerobotics.dashboard.config.Config;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -11,6 +13,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
 
+@Config
 public class BasicRedBlueDiff extends OpenCvPipeline {
 
     private final Telemetry telemetry;
@@ -95,11 +98,11 @@ public class BasicRedBlueDiff extends OpenCvPipeline {
     public void init(Mat input) {
         // Rectangle coordinates (upper left [A] and bottom right [B]) for the three cropped sections
         //this code just currently splits into three equal sections
-        rect_points.add(new Point(0, 0));
+        rect_points.add(new Point(0, 240));
         rect_points.add(new Point(input.cols()/3.0, input.rows()));
-        rect_points.add(new Point(input.cols()/3.0, 0));
-        rect_points.add(new Point(2*input.cols()/3.0, input.rows()));
-        rect_points.add(new Point(2*input.cols()/3.0, 0));
+        rect_points.add(new Point(input.cols()/3.0, 200));
+        rect_points.add(new Point(2*input.cols()/3.0, 580));
+        rect_points.add(new Point(2*input.cols()/3.0, 240));
         rect_points.add(new Point(input.cols(), input.rows()));
 
         // initialize the three cropped sections
