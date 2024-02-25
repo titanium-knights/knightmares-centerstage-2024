@@ -80,7 +80,7 @@ class TwoSplitColor @JvmOverloads constructor(
         location = Locations.values()[maxIndex]
         telemetry.addData("Chose position: ", location.name)
         telemetry.update()
-        val THICKNESS = 7
+//        val THICKNESS = 7
 
 //        Imgproc.rectangle(
 //                input,
