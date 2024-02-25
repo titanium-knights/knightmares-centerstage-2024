@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.utilities.SimpleMecanumDrive;
 
 @Config
-@TeleOp(name="DriveTrain only Teleop")
+@TeleOp(name="TestDrivetrain")
 public class TestDrivetrain extends OpMode {
     SimpleMecanumDrive drive;
 
@@ -38,6 +38,7 @@ public class TestDrivetrain extends OpMode {
 
         //Notation of a ? b : c means if a is true do b, else do c.
         double multiplier = normalPower;
+        drive.move(x * multiplier, y * multiplier, -turn * multiplier);
 
         if (gamepad1.dpad_up) {
             drive.moveBR(x * multiplier, y * multiplier, -turn * multiplier);
