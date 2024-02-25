@@ -24,7 +24,7 @@ public class ergo extends LinearOpMode {
     public static double ANGLETRES = 0;
 
     public static double STARTANGLE = 0;
-    public static double M = 60; // multiplier
+    public static double M = 1; // multiplier
 
     public SampleMecanumDrive drive;
     public Stick stick;
@@ -32,7 +32,9 @@ public class ergo extends LinearOpMode {
     public Slides slides;
     public Intake intake;
     public Bay bay;
-    public int rot = 76; // intended to be 90 but the turn overturns it
+    public int rot = 65; // intended to be 90 but the turn overturns it
+    // 65-76 if full battery
+    // 110 if at very low battery
     //TODO etc. etc., and add to the createHardware method
 
     public void createHardware(HardwareMap hmap) {
@@ -63,6 +65,7 @@ public class ergo extends LinearOpMode {
     public Trajectory rightOneCloseBackDrop;
     public Trajectory leftOneCloseBackBackDrop;
     public Trajectory backOneCloseBackDrop;
+    public Trajectory forwardHalf;
 
     @Override
     public void runOpMode() {
@@ -75,12 +78,12 @@ public class ergo extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         toSpotTwo = drive.trajectoryBuilder(new Pose2d())
-                .back(33*M)
+                .back(22*M)
                 .addDisplacementMarker(this::dropPixel)
                 .build();
 
         backToDropPixel = drive.trajectoryBuilder(new Pose2d())
-                .back(33*M)
+                .back(22*M)
                 .build();
 
         dropPixel = drive.trajectoryBuilder(new Pose2d())
@@ -91,17 +94,20 @@ public class ergo extends LinearOpMode {
         forwardFromPixel = drive.trajectoryBuilder(new Pose2d())
                 .forward(8*M)
                 .build();
+        forwardHalf = drive.trajectoryBuilder(new Pose2d())
+                .forward(12*M)
+                .build();
 
         backOne = drive.trajectoryBuilder(new Pose2d())
-                .back(20*M)
+                .back(24*M)
                 .build();
 
         backOnee = drive.trajectoryBuilder(new Pose2d())
-                .back(30*M)
+                .back(36*M)
                 .build();
 
         forwardOne = drive.trajectoryBuilder(new Pose2d())
-                .forward(30*M)
+                .forward(27*M)
                 .build();
 
         backThree = drive.trajectoryBuilder(new Pose2d())
@@ -160,9 +166,7 @@ public class ergo extends LinearOpMode {
         drive.turn(Math.toRadians(rot));
         drive.followTrajectory(toSpotTwo);
         drive.followTrajectory(forwardOne);
-        drive.turn(Math.toRadians(rot));
-        drive.followTrajectory(backOnee);
-        drive.followTrajectory(backOnee);
+
 
 
     }
