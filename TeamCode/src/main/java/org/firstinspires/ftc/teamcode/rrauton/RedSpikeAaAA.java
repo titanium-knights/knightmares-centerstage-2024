@@ -102,5 +102,17 @@ public class RedSpikeAaAA extends ergo {
         }
 
     }
+    public void dropPixel() {
+        stick.unlock();
+    }
+    public void paintPixel() {
+        slides.low();
+        sleep(500);
+        bay.open();
+        sleep(500);
+        bay.close();
+        sleep(500);
+        slides.tozero();
+    }
 
 }

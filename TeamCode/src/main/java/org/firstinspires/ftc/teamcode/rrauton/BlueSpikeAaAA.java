@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.rrauton;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.rr.drive.SampleMecanumDrive;
@@ -12,7 +14,7 @@ import org.firstinspires.ftc.teamcode.utilities.Slides;
 import org.firstinspires.ftc.teamcode.utilities.Stick;
 
 @Autonomous(name="BlueSpikeAaAA", group="Autonomous")
-public class BlueSpikeAaAA extends ergo {
+public class BlueSpikeAaAA extends LinearOpMode {
 
     public SampleMecanumDrive drive;
     public Stick stick;
@@ -46,25 +48,25 @@ public class BlueSpikeAaAA extends ergo {
         Pose2d startPose = new Pose2d(11.5, 60, Math.toRadians(90));
         drive.setPoseEstimate(startPose);
 
-        toSpotTwo = drive.trajectoryBuilder(new Pose2d())
+        Trajectory toSpotTwo = drive.trajectoryBuilder(new Pose2d())
                 .back(22*M)
                 .addDisplacementMarker(this::dropPixel)
                 .build();
 
-        backToDropPixel = drive.trajectoryBuilder(new Pose2d())
+        Trajectory backToDropPixel = drive.trajectoryBuilder(new Pose2d())
                 .back(22*M)
                 .build();
 
-        dropPixel = drive.trajectoryBuilder(new Pose2d())
+        Trajectory dropPixel = drive.trajectoryBuilder(new Pose2d())
                 .back(8*M)
                 .addDisplacementMarker(this::dropPixel)
                 .build();
 
-        forwardFromPixel = drive.trajectoryBuilder(new Pose2d())
+        Trajectory forwardFromPixel = drive.trajectoryBuilder(new Pose2d())
                 .forward(8*M)
                 .build();
 
-        forwardOne = drive.trajectoryBuilder(new Pose2d())
+        Trajectory forwardOne = drive.trajectoryBuilder(new Pose2d())
                 .forward(27*M)
                 .build();
 
@@ -102,6 +104,18 @@ public class BlueSpikeAaAA extends ergo {
                 break;
         }
 
+    }
+    public void dropPixel() {
+        stick.unlock();
+    }
+    public void paintPixel() {
+        slides.low();
+        sleep(500);
+        bay.open();
+        sleep(500);
+        bay.close();
+        sleep(500);
+        slides.tozero();
     }
 
 }

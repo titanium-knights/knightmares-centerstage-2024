@@ -40,7 +40,7 @@ public class ergo extends LinearOpMode {
     public void createHardware(HardwareMap hmap) {
         drive = new SampleMecanumDrive(hmap);
         stick = new Stick(hmap);
-        vision = new InitialVision(hmap, telemetry, "blue"); //TODO: remember to change to red for blue side
+//        vision = new InitialVision(hmap, telemetry, "blue"); //TODO: remember to change to red for blue side
         slides = new Slides(hmap);
         bay = new Bay(hmap);
         intake = new Intake(hmap);
