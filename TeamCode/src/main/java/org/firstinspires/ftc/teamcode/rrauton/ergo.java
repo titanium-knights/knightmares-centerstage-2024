@@ -24,6 +24,7 @@ public class ergo extends LinearOpMode {
     public static double ANGLETRES = 0;
 
     public static double STARTANGLE = 0;
+    public static double M = 60; // multiplier
 
     public SampleMecanumDrive drive;
     public Stick stick;
@@ -39,9 +40,8 @@ public class ergo extends LinearOpMode {
         stick = new Stick(hmap);
         vision = new InitialVision(hmap, telemetry, "blue"); //TODO: remember to change to red for blue side
         slides = new Slides(hmap);
-        stick = new Stick(hardwareMap);
-        intake = new Intake(hardwareMap);
-        bay = new Bay(hardwareMap);
+        bay = new Bay(hmap);
+        intake = new Intake(hmap);
     }
 
     public Trajectory toSpotTwo;
@@ -75,78 +75,78 @@ public class ergo extends LinearOpMode {
         drive.setPoseEstimate(startPose);
 
         toSpotTwo = drive.trajectoryBuilder(new Pose2d())
-                .back(33)
+                .back(33*M)
                 .addDisplacementMarker(this::dropPixel)
                 .build();
 
         backToDropPixel = drive.trajectoryBuilder(new Pose2d())
-                .back(33)
+                .back(33*M)
                 .build();
 
         dropPixel = drive.trajectoryBuilder(new Pose2d())
-                .back(8)
+                .back(8*M)
                 .addDisplacementMarker(this::dropPixel)
                 .build();
 
         forwardFromPixel = drive.trajectoryBuilder(new Pose2d())
-                .forward(8)
+                .forward(8*M)
                 .build();
 
         backOne = drive.trajectoryBuilder(new Pose2d())
-                .back(20)
+                .back(20*M)
                 .build();
 
         backOnee = drive.trajectoryBuilder(new Pose2d())
-                .back(30)
+                .back(30*M)
                 .build();
 
         forwardOne = drive.trajectoryBuilder(new Pose2d())
-                .forward(30)
+                .forward(30*M)
                 .build();
 
         backThree = drive.trajectoryBuilder(new Pose2d())
-                .back(82)
+                .back(82*M)
                 .build();
         rightHalf = drive.trajectoryBuilder(new Pose2d())
-                .strafeRight(23)
+                .strafeRight(23*M)
                 .build();
         rightOne = drive.trajectoryBuilder(new Pose2d()) // must be between 44 and 30
-                        .strafeRight(35)
+                        .strafeRight(35*M)
                                 .build();
         rightOneHalf = drive.trajectoryBuilder(new Pose2d())
-                .strafeRight(44)
+                .strafeRight(44*M)
                 .build();
 
         leftOne = drive.trajectoryBuilder(new Pose2d())
-                .strafeLeft(35)
+                .strafeLeft(35*M)
                 .build();
 
         leftHalf = drive.trajectoryBuilder(new Pose2d())
-                .strafeLeft(23)
+                .strafeLeft(23*M)
                 .build();
 
         leftOneHalf = drive.trajectoryBuilder(new Pose2d())
-                .strafeLeft(44)
+                .strafeLeft(44*M)
                 .build();
 
         toPaint = drive.trajectoryBuilder(new Pose2d())
-                        .back(20)
+                        .back(20*M)
                                 .addDisplacementMarker(this::paintPixel)
                                                 .build();
         forwardFromToPaint = drive.trajectoryBuilder(new Pose2d())
-                        .forward(5)
+                        .forward(5*M)
                                 .build();
 
         rightOneCloseBackDrop = drive.trajectoryBuilder(new Pose2d())
-                .strafeRight(35)
+                .strafeRight(35*M)
                 .build();
 
         leftOneCloseBackBackDrop = drive.trajectoryBuilder(new Pose2d())
-                .strafeLeft(35)
+                .strafeLeft(35*M)
                 .build();
 
         backOneCloseBackDrop = drive.trajectoryBuilder(new Pose2d())
-                        .back(20)
+                        .back(20*M)
                                         .build();
 
         waitForStart();
@@ -154,14 +154,16 @@ public class ergo extends LinearOpMode {
         if(isStopRequested()) return;
 
         int pos = vision.getPosition();
-        drive.followTrajectory(toSpotTwo);
+
         drive.followTrajectory(forwardFromPixel);
         drive.turn(Math.toRadians(rot));
+        drive.turn(Math.toRadians(rot));
+        drive.followTrajectory(toSpotTwo);
+        drive.followTrajectory(forwardOne);
+        drive.turn(Math.toRadians(rot));
         drive.followTrajectory(backOnee);
-        drive.followTrajectory(toPaint);
-        drive.followTrajectory(forwardFromToPaint);
-        drive.followTrajectory(rightOneCloseBackDrop);
-        drive.followTrajectory(backOneCloseBackDrop);
+        drive.followTrajectory(backOnee);
+
 
     }
     public void dropPixel() {

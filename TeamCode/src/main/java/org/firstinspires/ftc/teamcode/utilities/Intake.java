@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Intake {
     DcMotor intakeMotor;
 
-    public static double POWER = 0.5; // TODO: tune this
+    public static double POWER = 1; // TODO: tune this
 
     public Intake(HardwareMap hmap) {
         this.intakeMotor = hmap.dcMotor.get(CONFIG.intake);

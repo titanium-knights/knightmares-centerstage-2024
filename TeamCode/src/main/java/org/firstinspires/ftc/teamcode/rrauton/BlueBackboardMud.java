@@ -9,14 +9,14 @@ import org.firstinspires.ftc.teamcode.utilities.Slides;
 import org.firstinspires.ftc.teamcode.utilities.Bay;
 import org.firstinspires.ftc.teamcode.utilities.Intake;
 import org.firstinspires.ftc.teamcode.utilities.Stick;
-//import org.firstinspires.ftc.teamcode.utilities.TwoPieceVision;
+import org.firstinspires.ftc.teamcode.utilities.InitialVision;
 
 @Autonomous(name="BlueBackboardMud", group="Autonomous")
 public class BlueBackboardMud extends ergo {
 
     public SampleMecanumDrive drive;
     public Stick stick;
-    //public TwoPieceVision vision;
+    public InitialVision vision;
     public Slides slides;
     public Intake intake;
     public Bay bay;
@@ -28,11 +28,10 @@ public class BlueBackboardMud extends ergo {
     public void createHardware(HardwareMap hmap) {
         drive = new SampleMecanumDrive(hmap);
         stick = new Stick(hmap);
-        //vision = new TwoPieceVision(hmap, telemetry, "blue"); //TODO: remember to change to blue for blue side
+        vision = new InitialVision(hmap, telemetry, "blue"); //TODO: remember to change to blue for blue side
         slides = new Slides(hmap);
-        stick = new Stick(hardwareMap);
-        intake = new Intake(hardwareMap);
-        bay = new Bay(hardwareMap);
+        bay = new Bay(hmap);
+        intake = new Intake(hmap);
     }
 
     @Override
@@ -59,8 +58,8 @@ public class BlueBackboardMud extends ergo {
                 drive.followTrajectory(leftHalf);
                 drive.followTrajectory(backOne);
                 drive.followTrajectory(rightOne);
-                drive.followTrajectory(toPaint);
-                drive.followTrajectory(forwardFromToPaint);
+                //drive.followTrajectory(toPaint);
+                //drive.followTrajectory(forwardFromToPaint);
                 drive.followTrajectory(rightOne);
                 drive.followTrajectory(backOneCloseBackDrop);
                 break;
@@ -72,8 +71,8 @@ public class BlueBackboardMud extends ergo {
                 drive.turn(Math.toRadians(rot));
                 drive.turn(Math.toRadians(rot));
                 drive.followTrajectory(backOne);
-                drive.followTrajectory(toPaint);
-                drive.followTrajectory(forwardFromToPaint);
+                //drive.followTrajectory(toPaint);
+                //drive.followTrajectory(forwardFromToPaint);
                 drive.followTrajectory(rightOneHalf);
                 drive.followTrajectory(backOneCloseBackDrop);
                 break;
@@ -83,8 +82,8 @@ public class BlueBackboardMud extends ergo {
                 drive.followTrajectory(forwardFromPixel);
                 drive.turn(Math.toRadians(rot));
                 drive.followTrajectory(backOnee);
-                drive.followTrajectory(toPaint);
-                drive.followTrajectory(forwardFromToPaint);
+                //drive.followTrajectory(toPaint);
+                //drive.followTrajectory(forwardFromToPaint);
                 drive.followTrajectory(rightOne);
                 drive.followTrajectory(backOneCloseBackDrop);
                 break;

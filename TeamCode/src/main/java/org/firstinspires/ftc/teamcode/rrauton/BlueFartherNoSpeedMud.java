@@ -9,14 +9,14 @@ import org.firstinspires.ftc.teamcode.utilities.Bay;
 import org.firstinspires.ftc.teamcode.utilities.Intake;
 import org.firstinspires.ftc.teamcode.utilities.Slides;
 import org.firstinspires.ftc.teamcode.utilities.Stick;
-import org.firstinspires.ftc.teamcode.utilities.TwoPieceVision;
+import org.firstinspires.ftc.teamcode.utilities.InitialVision;
 
 @Autonomous(name="MudasirBlueRightFAR", group="Autonomous")
 public class BlueFartherNoSpeedMud extends ergo {
 
     public SampleMecanumDrive drive;
     public Stick stick;
-    public TwoPieceVision vision;
+    public InitialVision vision;
     public Slides slides;
     public Intake intake;
     public Bay bay;
@@ -28,11 +28,10 @@ public class BlueFartherNoSpeedMud extends ergo {
     public void createHardware(HardwareMap hmap) {
         drive = new SampleMecanumDrive(hmap);
         stick = new Stick(hmap);
-        vision = new TwoPieceVision(hmap, telemetry, "blue"); //TODO: remember to change to blue for blue side
+        vision = new InitialVision(hmap, telemetry, "blue"); //TODO: remember to change to blue for blue side
         slides = new Slides(hmap);
-        stick = new Stick(hardwareMap);
-        intake = new Intake(hardwareMap);
-        bay = new Bay(hardwareMap);
+        bay = new Bay(hmap);
+        intake = new Intake(hmap);
     }
 
     @Override

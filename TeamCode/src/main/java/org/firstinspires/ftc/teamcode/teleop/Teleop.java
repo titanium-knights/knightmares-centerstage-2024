@@ -102,6 +102,13 @@ public class Teleop extends OpMode {
 
         double pos = bay.getPosition();
 
+        if (gamepad1.b) {
+            bay.close();
+        }
+        if (gamepad1.a) {
+            bay.open();
+        }
+
 
         switch (bayState) {
             case OPENED:
