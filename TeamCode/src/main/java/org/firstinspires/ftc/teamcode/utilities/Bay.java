@@ -25,8 +25,8 @@ public class Bay {
     public static double openPosRight = 0.25;
 
     public Bay(HardwareMap hmap) {
-        this.bottomLeft = hmap.servo.get(CONFIG.bayLeft);
-        this.bottomRight = hmap.servo.get(CONFIG.bayRight);
+         this.bottomLeft = hmap.servo.get(CONFIG.bayLeft);
+         this.bottomRight = hmap.servo.get(CONFIG.bayRight);
     }
 
     public void open() {

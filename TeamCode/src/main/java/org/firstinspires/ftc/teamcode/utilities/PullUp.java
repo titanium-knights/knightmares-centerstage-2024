@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class PullUp {
     //DANIEL comment: For this, we don't really care about degrees so, we deal with
     //everything in encoder ticks or number of rotations
-    DcMotor pullUpMotor1;
-    DcMotor pullUpMotor2;
+     DcMotor pullUpMotor1;
+     DcMotor pullUpMotor2;
     public static double Encoder_Ticks = 537.7;
 
     public static int topHeight = -100; // 24 * Encoder_Ticks
