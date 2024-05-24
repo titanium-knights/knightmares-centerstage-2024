@@ -31,4 +31,7 @@ public class CONFIG {
 
     //stick
     public static String stick = "stick";
+
+    //spinny thing
+    public static String spinny = "spinny";
 }

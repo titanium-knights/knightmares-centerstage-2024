@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.utilities.PullUp;
 import org.firstinspires.ftc.teamcode.utilities.PlaneLauncher;
 import org.firstinspires.ftc.teamcode.utilities.SimpleMecanumDrive;
 import org.firstinspires.ftc.teamcode.utilities.Bay;
+import org.firstinspires.ftc.teamcode.utilities.SpinnyThing;
 
 @Config
 @TeleOp(name="DriveTrain Teleop")
@@ -23,6 +24,7 @@ public class Teleop extends OpMode {
     PlaneLauncher plane;
     SimpleMecanumDrive drive;
     Bay bay;
+    SpinnyThing spinnyThing;
 
     //Set normal power constant to 1, no point in slowing the robot down
     final double normalPower = 1;
@@ -262,12 +264,12 @@ public class Teleop extends OpMode {
         if (gamepad1.dpad_up) {
             pullup.manualLeftUp();
             pullup.manualRightUp();
-            pullupstate = PullUpState.REACH_UP;
+            // pullupstate = PullUpState.REACH_UP;
         }
         if (gamepad1.dpad_down) {
             pullup.manualLeftDown();
             pullup.manualRightDown();
-            pullupstate = PullUpState.NEUTRAL;
+            // pullupstate = PullUpState.NEUTRAL;
         }
 //        switch (pullupstate) {
 //            case NEUTRAL:
