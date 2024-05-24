@@ -260,17 +260,27 @@ public class Teleop extends OpMode {
                 telemetry.update();
         }
 
-        //PULL UP
+        //PULL UP (TEMP COMMENTED OUT)
+//        if (gamepad1.dpad_up) {
+//            pullup.manualLeftUp();
+//            pullup.manualRightUp();
+//            // pullupstate = PullUpState.REACH_UP;
+//        }
+//        if (gamepad1.dpad_down) {
+//            pullup.manualLeftDown();
+//            pullup.manualRightDown();
+//            // pullupstate = PullUpState.NEUTRAL;
+//        }
+
         if (gamepad1.dpad_up) {
-            pullup.manualLeftUp();
-            pullup.manualRightUp();
-            // pullupstate = PullUpState.REACH_UP;
+            spinnyThing.toDrop();
         }
+
         if (gamepad1.dpad_down) {
-            pullup.manualLeftDown();
-            pullup.manualRightDown();
-            // pullupstate = PullUpState.NEUTRAL;
+            spinnyThing.toPickUp();
         }
+
+
 //        switch (pullupstate) {
 //            case NEUTRAL:
 //                if (gamepad1.x && gamepad1.dpad_up) {
