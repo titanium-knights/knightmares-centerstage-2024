@@ -89,6 +89,7 @@ public class Teleop extends OpMode {
         this.slideButton = ButtonPressState.UNPRESSED;
         this.slideManual = ButtonPressState.UNPRESSED;
         this.slideManualUp = ButtonPressState.UNPRESSED;
+        this.spinnyThing = new SpinnyThing(hardwareMap);
     }
 
     @Override
